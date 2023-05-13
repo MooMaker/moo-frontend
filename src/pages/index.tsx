@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-
 import {
   Table,
   Thead,
@@ -12,12 +11,52 @@ import {
   Flex,
   Box
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { BigNumber } from "ethers";
+
+interface Bid {
+  maker: string,
+  tokenIn: string,
+  tokenOut: string
+}
 
 const Home: NextPage = () => {
-  const [bids, setBids] = useState([{ maker: "0x1", tokenIn: "10000000", tokenOut: "30000"}, { maker: "0x2", tokenIn: "10000000", tokenOut: "20000"}]);
+  const [bids, setBids] = useState<Bid[]>([]);
   const [auction, setAuction] = useState("Auction1");
+  
+  useEffect(() => {
+    if(!process.env.REACT_APP_WEB_SOCKET) {
+      setAuction("Auction1")
+      setBids([{maker: "0x1", tokenIn: "10000000", tokenOut: "30000"}, {maker: "0x2", tokenIn: "10000000", tokenOut: "20000"}]);
+      return;
+    }
+    const ws = new WebSocket(process.env.REACT_APP_WEB_SOCKET);
 
+    const apiCall = {
+    };
+  
+    ws.onopen = (event) => {
+      ws.send(JSON.stringify(apiCall));
+    };
+  
+    ws.onmessage = function (event) {
+      const json = JSON.parse(event.data);
+      try {
+        if ((json.event = "bid")) {
+          setBids([...bids, json.data as Bid]);
+        }
+        else if ((json.event = "auction")) {
+          setAuction(json.data);
+          setBids([]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    
+  }, []);
+  
 
   return (
     <Flex
@@ -51,8 +90,10 @@ const Home: NextPage = () => {
             </Thead>
             <Tbody>
               {
-                bids.map((bid, index) => {
-                  return <Tr>
+                bids
+                .sort((a, b) => BigNumber.from(a.tokenOut).sub(b.tokenOut).isNegative() ? 1 : -1 )
+                .map((bid, index) => {
+                  return <Tr key={index}>
                   <Td>{index + 1}.</Td>
                   <Td>{bid.maker}</Td>
                   <Td isNumeric>{bid.tokenIn}</Td>
