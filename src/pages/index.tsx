@@ -15,9 +15,8 @@ import {
 import { useState } from "react";
 
 const Home: NextPage = () => {
-  let [bids, setBids] = useState([{}, {}]);
-  let [auction, setAuction] = useState("Auction1");
-
+  const [bids, setBids] = useState([{ maker: "0x1", tokenIn: "10000000", tokenOut: "30000"}, { maker: "0x2", tokenIn: "10000000", tokenOut: "20000"}]);
+  const [auction, setAuction] = useState("Auction1");
 
 
   return (
@@ -55,9 +54,9 @@ const Home: NextPage = () => {
                 bids.map((bid, index) => {
                   return <Tr>
                   <Td>{index + 1}.</Td>
-                  <Td>0x...</Td>
-                  <Td isNumeric>1000000000</Td>
-                  <Td isNumeric>200000</Td>
+                  <Td>{bid.maker}</Td>
+                  <Td isNumeric>{bid.tokenIn}</Td>
+                  <Td isNumeric>{bid.tokenOut}</Td>
                 </Tr>
                 })
               }
