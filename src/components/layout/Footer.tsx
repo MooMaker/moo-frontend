@@ -18,10 +18,6 @@ import {
 import {
   SITE_DESCRIPTION,
   SOCIAL_GITHUB,
-  SOCIAL_LINKEDIN,
-  SOCIAL_MEDIUM,
-  SOCIAL_TWITTER,
-  SOCIAL_DISCORD,
 } from "../../configuration/Config";
 import { NetworkStatus } from "../NetworkStatus";
 import { Logo, SocialButton } from "../../Reusables/helper";
@@ -69,34 +65,10 @@ export function Footer(props: Props) {
         </Link>
         <Stack direction={"row"} spacing={6}>
           <SocialButton
-            label={"Twitter"}
-            href={`https://twitter.com/${SOCIAL_TWITTER}`}
-          >
-            <FaTwitter />
-          </SocialButton>
-          <SocialButton
-            label={"Medium"}
-            href={`https://medium.com/${SOCIAL_MEDIUM}`}
-          >
-            <FaMedium />
-          </SocialButton>
-          <SocialButton
             label={"Github"}
             href={`https://github.com/${SOCIAL_GITHUB}`}
           >
             <FaGithub />
-          </SocialButton>
-          <SocialButton
-            label={"Discord"}
-            href={`https://discord.com/channels/${SOCIAL_DISCORD}`}
-          >
-            <FaDiscord />
-          </SocialButton>
-          <SocialButton
-            label={"LinkedIn"}
-            href={`https://www.linkedin.com/in/${SOCIAL_LINKEDIN}`}
-          >
-            <FaLinkedin />
           </SocialButton>
         </Stack>
       </Container>

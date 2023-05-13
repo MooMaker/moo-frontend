@@ -17,9 +17,9 @@ export const Logo = (props: any) => {
           height={8}
           alt={"Login Image"}
           objectFit={"cover"}
-          src={"/logo.png"}
+          src={"/noun.png"}
         />
-        <Text as="kbd">DappBoilerplate</Text>
+        <Text as="kbd">MooMaker</Text>
       </>
     </HStack>
   );
